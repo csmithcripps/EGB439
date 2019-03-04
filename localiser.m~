@@ -1,34 +1,47 @@
-% pb = PiBot('172.19.232.105');
+pb = PiBot('172.19.232.105','172.19.232.12',6);
+
+pb.setVelocity(60,40)
 
 
-x1 = 1;
-y1 = 1;
-theta = 45;
-l = 0.2;
-w = 0.1;
-
-R = [cosd(theta) -sind(theta) x1; sind(theta) cosd(theta) y1; 0 0 1];
-triangle = [0 0; -l w; -l -w]
-
-
-
-% xm = x1-l* cos(theta);
-% ym = y1-l* sin(theta);
+% x1 = 1;
+% y1 = 1;
+% theta = -45;
+% PoseTriangle = poseToTriangle(x1,y1, theta)
 % 
-% x2 = xm - (w/2)* cos(theta);
-% y2 = ym + (w/2)* sin(theta);
+% figure
+% hold on;
+% % line([x1,x2], [y1, y2], 'Color', 'r');
+% % line([x2,x3], [y2, y3], 'Color', 'r');
+% % line([x3,x1], [y3, y1], 'Color', 'r');
 % 
-% x3 = xm + (w/2)* cos(theta);
-% y3 = ym - (w/2)* sin(theta);
+% fill(PoseTriangle(:,1),PoseTriangle(:,2),'r');
+% axis([0,2,0,2]);
 
-transposedT = triangle*R
+%%
+localiser = pb.getLocalizerPose();
+x = localiser.pose.x;
+y = localiser.pose.y;
+pastPoints = zeros(11,2)
+%%
+n=11;
+while true
+    localiser = pb.getLocalizerPose();
+    x = localiser.pose.x;
+    y = localiser.pose.y;
+    theta = localiser.pose.theta;
+    PoseTriangle = poseToTriangle(x,y, theta);
+    
+    pastPoints(n,:) = [x y];
+    
+    hold on
 
-
-figure
-hold on;
-% line([x1,x2], [y1, y2], 'Color', 'r');
-% line([x2,x3], [y2, y3], 'Color', 'r');
-% line([x3,x1], [y3, y1], 'Color', 'r');
-
-fill(transposedT(:,1),transposedT(:,2),'r');
-axis([0,2,0,2]);
+    fill(PoseTriangle(:,1),PoseTriangle(:,2),'r');
+    axis([0,2,0,2]);
+    
+    plot(pastPoints(:,n-10:n), 'b');
+    
+    hold off
+    pause(0.5);
+    n = n+1;
+    
+end
