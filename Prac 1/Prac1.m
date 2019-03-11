@@ -1,4 +1,4 @@
-pb = PiBot('172.19.232.105','172.19.232.186',6);
+pb = PiBot('172.19.232.105','172.19.232.12','6');
 
 % pb.setVelocity(60,40)
 
@@ -30,19 +30,9 @@ while true
     x = RobotInfo.pose.x;
     y = RobotInfo.pose.y;
     theta = RobotInfo.pose.theta;
-    PoseTriangle = poseToTriangle(x,y, -theta);
     
-    pastPoints(1) = [];
-    pastPoints = [pastPoints; x y];
+    pastPoints = qplot(x,y,theta,pastPoints);
     
-    hold on
-
-    fill(PoseTriangle(:,1),PoseTriangle(:,2),'r');
-    axis([0,2,0,2]);
-    
-    plot(pastPoints(:,1), pastPoints(:,2), 'b');
-    
-    hold off
     pause(0.5);
     n = n+1;
     clf

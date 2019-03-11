@@ -1,4 +1,4 @@
-function [outputArg1,outputArg2] = drawTriangle(x,y,theta)
+function drawTriangle(x,y,theta)
 %DRAWTRIANGLE 
 
 triangle = poseToTriangle(x,y,theta);
