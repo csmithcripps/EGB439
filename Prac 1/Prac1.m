@@ -32,6 +32,7 @@ while true
     theta = RobotInfo.pose.theta;
     PoseTriangle = poseToTriangle(x,y, -theta);
     
+    pastPoints(1) = [];
     pastPoints = [pastPoints; x y];
     
     hold on
@@ -39,7 +40,7 @@ while true
     fill(PoseTriangle(:,1),PoseTriangle(:,2),'r');
     axis([0,2,0,2]);
     
-    plot(pastPoints(end-10:end,1), pastPoints(end-10:end,2), 'b');
+    plot(pastPoints(:,1), pastPoints(:,2), 'b');
     
     hold off
     pause(0.5);
