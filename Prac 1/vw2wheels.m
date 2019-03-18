@@ -9,12 +9,10 @@ function wheelVel = vw2wheels(vw)
     d = 0.065; % Wheel Diameter
     
     vdelta = vw(2) * W;
-    vlinear = [-1,1;1,1] \ [vdelta ; 2 * vw(1)]; %[vl;vr]
+    vlinear = [-1,1;1,1] * [vdelta ; 2 * vw(1)]; %[vl;vr]
     
+    vleft = min(max(vlinear(1) * (2/(pi * d)),100),-100);
+    vright = min(max(vlinear(2) * (2/(pi * d)),100),-100);
     
-    wheelVel = vlinear* ((60*2)/(pi*d));
-    wheelVel(1) = min(max(wheelVel(1),-100),100);
-    wheelVel(2) = min(max(wheelVel(2),-100),100);
-    
-    wheelVel = transpose(wheelVel);
+    wheelVel = [vleft,vright];
 end

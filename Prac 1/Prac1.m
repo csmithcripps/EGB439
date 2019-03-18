@@ -1,6 +1,6 @@
 pb = PiBot('172.19.232.105','172.19.232.12','6');
 
-% pb.setVelocity(60,40)
+pb.setVelocity(60,40)
 
 
 % x1 = 1;
