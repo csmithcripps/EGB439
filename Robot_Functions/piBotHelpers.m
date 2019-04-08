@@ -101,7 +101,7 @@ classdef piBotHelpers
 
         end
         
-        function qplot(q,point)
+        function qplot(q)
             % Plot Given a pose q. Optional goal point can also be input,
             % which will be drawn as a blue pentagram
             
@@ -131,11 +131,7 @@ classdef piBotHelpers
             axis([0,2,0,2]);
             axis 'square'
             grid on
-            
             plot(previous(:,1),previous(:,2))
-            if nargin >1
-                scatter(point(1),point(2),'pb')
-            end
         end
 % etc
     end % static methods

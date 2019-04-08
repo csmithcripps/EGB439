@@ -17,15 +17,12 @@ function M = window(A, x, y)
 %
 % Should the window extend beyond the edges of the matrix the function must
 % return an empty matrix [].
+  
+    % Pad A with NaNs
+    A = padarray(A,[1,1],NaN);
     
-    % Test Values
-    sizes = size(A);
-
-    if x < sizes(2) && x > 1 && y < sizes(1) && y > 1
-        M = A(y-1:y+1,x-1:x+1);
-    else
-        M = [];
-    end
+    % Return the 3x3 window
+    M = B(y:y+2, x:x+2);
 end
 
 function B = minwin(A) 
@@ -56,8 +53,9 @@ function next = minval(M)
 % Return:
 %  next is a 1x2 matrix with elements [x, y] which are the horizontal and vertical coordinates relative to the centre
 %       element, of the smallest element in the matrix.
-    [row,col] = find(M == min(min(M)))
-    next = fliplr([row,col] - [2,2]);
+    assert(~isempty(M));
+    [row,col] = find(M == min(min(M)));
+    next = fliplr([row(1),col(1)] - [2,2]);
 end
 
 
@@ -81,6 +79,7 @@ function dtransform = distanceTransform(map, goal)
     for i=1:100
         for x = 1:size(B,2)
             for y = 1:size(B,1)
+                if isnan(B(y,x)); continue; end
                 M = window(B,x,y);
                 if isempty(M)
                     B(y,x) = NaN;
@@ -104,16 +103,20 @@ function path = findPath(map, start, goal)
     %   goal is a 1x2 matrix containing the end coordinate [x y] for the path
     % Return:
     %   path is an Nx2 matrix containing the ordered path from start to goal, inclusive of end points.  N depends on the map.
-    
-    dtransform = distanceTransform(map, goal);   % use your own distance transform function
+%     
+%     dtransform = distanceTransform(map, goal);   % use your own distance transform function
     
     % compute the best path 
     path = [start];
     current = start;
     
-    while current ~= goal
-        M = window(dtransform, current(1),current(2));
-        current = current + minVal(M);
-        path = [path; current];
+    while ~(current(1) == goal(1) && current(2) == goal(2))
+        M = window(map, current(1),current(2));
+        if isempty(M)
+            disp('fuck')
+        else
+            current = current + minval(M);
+            path = [path; current];
+        end
     end
 end

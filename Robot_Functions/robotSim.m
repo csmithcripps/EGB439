@@ -21,8 +21,8 @@ classdef robotSim < handle
         
         
         function plot(self)
-            hold on
             piBotHelpers.qplot(self.q)
+            
         end
 
 
