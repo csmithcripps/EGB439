@@ -5,7 +5,8 @@ addpath('../Robot_Functions')
 
 %% Init Variables
 
-SIM = true;
+SIM = false;
+USING_BOT = false;
 goal = [0.5,0.5];
 scalepx = 100/2;
 
@@ -16,13 +17,7 @@ if ~SIM
     pb = PiBot('172.19.232.178','172.19.232.11',6);
 
     disp('1. Getting Robot Info')
-    pose = pb.getLocalizerPose.pose;
-    x = pose.x;
-    y = 2-pose.y;
-    theta = pose.theta;
     img = pb.getLocalizerImage();
-    disp(['....x = ',x])
-    disp(['....y = ',y])
 else
     %SIMULATED VARIABLES
     disp('1. Setting Virtual Robot Variables')
@@ -44,19 +39,31 @@ imgThreshhold(1:20,:) = 0;
 imgThreshhold(end-20:end,:) = 0;
 
 occupancyGrid = imresize(imgThreshhold, 1/5);
-
-%Remove Robot
-if x ~= 0 && y ~= 0
-    disp('.... b: Removing Robot from occupancy grid')
-    x1   = round(max(x*50 - 10,1));
-    y1   = round(min(y*50 - 10,100));
-    x2   = round(max(x*50 + 10,1));
-    y2   = round(min(y*50 + 10,100));
-    occupancyGrid(y1:y2,x1:x2) = 0;
-end
+% 
+% %Remove Robot
+% if x ~= 0 && y ~= 0
+%     disp('.... b: Removing Robot from occupancy grid')
+%     x1   = round(max(x*50 - 10,1));
+%     y1   = round(min(y*50 - 10,100));
+%     x2   = round(max(x*50 + 10,1));
+%     y2   = round(min(y*50 + 10,100));
+%     occupancyGrid(y1:y2,x1:x2) = 0;
+% end
+disp("!!--Place Robot and Press Enter--!!")
+pause;
 %% Find Path
 %%
 disp('3. Analysing Map')
+
+if ~SIM
+    pose = pb.getLocalizerPose.pose;
+    x = pose.x;
+    y = 2-pose.y;
+    theta = pose.theta;
+    disp(['....x = ',x])
+    disp(['....y = ',y])
+end
+    
 start = [x,y] * scalepx;
 goalpx = goal * scalepx;
 
@@ -121,7 +128,9 @@ for point = pathDisp.'
     rob.update(vel);
     hold on     
     rob.plot()
+    hold on
     plot(pathDisp(:,1),pathDisp(:,2),'b--')
+    hold on
     scatter(point(1),point(2),'rp') 
     first = 0;
     pause(0.01)
