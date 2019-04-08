@@ -1,4 +1,4 @@
-%% Prac 6
+%% Prac 7
 
 clear all
 addpath('../Robot_Functions')
@@ -21,9 +21,6 @@ if ~SIM
 else
     %SIMULATED VARIABLES
     disp('1. Setting Virtual Robot Variables')
-    x = 1.5;
-    y = 1.5;
-    theta = -pi/2;
     img = zeros(500,500);
     img(200:300,100:250) = 100;
     img(250:300,120:500) = 100;
@@ -55,13 +52,17 @@ pause;
 %%
 disp('3. Analysing Map')
 
-if ~SIM
+if ~SIM && USING_BOT
     pose = pb.getLocalizerPose.pose;
     x = pose.x;
     y = 2-pose.y;
     theta = pose.theta;
     disp(['....x = ',x])
     disp(['....y = ',y])
+else
+    x = 1.5;
+    y = 1.5;
+    theta = -pi/2;    
 end
     
 start = [x,y] * scalepx;
