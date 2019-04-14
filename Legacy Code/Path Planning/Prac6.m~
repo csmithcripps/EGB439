@@ -46,11 +46,11 @@ expandedMap = imdilate(occupancyGrid,se);
 expandedMap = flipud(expandedMap);
 
 disp('.... * Computing Dist Transform')
-dtransform = PathPlanning.distanceTransform( double(expandedMap), goal);
+dtransform = myFunction('dxform', double(expandedMap), goal);
 
 
 disp('.... * Computing Path')
-path = PathPlanning.findPath( double(dtransform), start, goal, 1);
+path = myFunction('path', double(dtransform), start, goal);
 disp('........ * Path Found')
 %% Display Output
 %%
