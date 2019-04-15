@@ -2,16 +2,16 @@
 %% Prac 7
 
 clear all
-addpath('../Robot_Functions')
+addpath('~/Documents/EGB439/Robot_Functions')
 
 %% Init Variables
 
-SIM = false;
+SIM = true;
 USING_BOT = false;
-goal = [0.1,0.1];
+goal = [1.9 ,0.3];
 scalepx = 100/2;
 n = 40;
-d = 0.01;
+d = 0;
 dt = 0.25;
 qs = zeros([n 3]);
 
@@ -26,9 +26,7 @@ if ~SIM
 else
     %SIMULATED VARIABLES
     disp('1. Setting Virtual Robot Variables')
-    img = zeros(500,500);
-    img(200:300,100:250) = 100;
-    img(250:300,120:500) = 100;
+    img = rgb2gray(imread('Map.png'));
 end
 %% Compute Occupancy Grid
 
@@ -36,10 +34,10 @@ disp('2. Making Map')
 disp('.... a: Thresholding for obstacles')
 
 imgThreshhold = img > 20;
-imgThreshhold(:,1:20) = 0;
-imgThreshhold(:,end-20:end) = 0;
-imgThreshhold(1:20,:) = 0;
-imgThreshhold(end-20:end,:) = 0;
+imgThreshhold(:,1:5) = 0;
+imgThreshhold(:,end-5:end) = 0;
+imgThreshhold(1:5,:) = 0;
+imgThreshhold(end-5:end,:) = 0;
 
 occupancyGrid = imresize(imgThreshhold, 1/5);
 % 
@@ -62,7 +60,7 @@ goalpx = goal * scalepx;
 % Enlarge Obstacles by 5 to allow space for the robot
 se = strel('disk',5);
 expandedMap = imdilate(occupancyGrid,se);
-expandedMap = flipud(expandedMap);
+% expandedMap = flipud(expandedMap);
 
 disp('.... a: Computing Dist Transform')
 tic
@@ -115,10 +113,13 @@ hold off
 
 figure(2)
 subplot(211)
+dtransform = flipud(dtransform);
 idisp (dtransform,'xydata',{[0,2] [2,0]},'ynormal')
 hold off
 
 figure(3)
+
+RGB = flipud(RGB);
 idisp (RGB,'xydata',{[0,2] [2,0]},'ynormal')
 hold on
 plot(pathDisp(:,1),pathDisp(:,2))

@@ -37,8 +37,8 @@ classdef control < handle
             %  vw is a 1x2 vector containing the request velocity and turn rate of the robot [v, omega]
             
             % Controller Gains
-            Kh = 5.5;
-            Kv = 0.65;
+            Kh = 5;
+            Kv = 0.55;
             Ki = 0.03;
 
             % Create persistent integral variable

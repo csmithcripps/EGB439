@@ -374,6 +374,12 @@ classdef PiBot < handle
                 p = [];
             end
         end
+        
+        function stat = getEncoder(self)
+            json = webread(self.robot+"/robot/set/velocity");
+            structs = jsondecode(json);
+            stat = [structs.encoder.left structs.encoder.right];
+        end 
     end
 end
 function print_json(j1, j2)
