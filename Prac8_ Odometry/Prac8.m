@@ -18,8 +18,8 @@ prevEncoder = [0 0];
 pb.resetEncoder
 figure
 hold on
-
-while (1)    
+r = sqrt(0.5^2 + 0.5^2);
+while (r > 0.1)    
     %% Estimate Position   
     % Update Encoder
     encoder = pb.getEncoder;
@@ -28,13 +28,8 @@ while (1)
     
     %% Control Robot
     % Drive toward goal
-    vel = control.driveToPoint(q, goal);
+    vel = control.driveToPoint(q,goal,0.23,0.15);  % compute the wheel speeds given the current configuration
     pb.setVelocity(vel)
-    
-    % Check if reached goal
-    if abs(sum(vel)) < 10
-        break
-    end
     
     % Update values
     dq = encoderToPose(dTicks, q);
@@ -45,20 +40,21 @@ while (1)
     qList = [qList; q];    
     
     %% Plot
-    for qi = qList
+    for i = size(qList,1)
         hold on
-        drawFrame(qi)
+        drawFrame(qList(i,:))
         drawnow
     end
     axis equal
     drawnow
     
+    r = sqrt((goal(1) - q(1))^2 + (goal(2) - q(2))^2);
     pause(0.1);   
 end
 
 
-
 %% End Program
 pb.stop
+disp('Press <Enter> to exit')
 pause
 close all

@@ -6,8 +6,8 @@ classdef control < handle
             % q is the initial configuration vector (x, y, theta) in units of metres and radians
             % point is the vector (x, y) specifying the goal point of the robot
             if nargin < 3
-                Kh = 4;
-                Kv = 0.5;
+                Kh = 0.2;
+                Kv = 0.15;
             end
             
             r = sqrt((point(1) - q(1))^2 + (point(2) - q(2))^2);
