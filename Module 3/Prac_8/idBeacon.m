@@ -1,7 +1,7 @@
 function IDList = idBeacon(cam)
 
     %Initial Varaibla values
-    width = 0;
+    width = 0.0;
     char ID;
     IDList = [];
     [Rblobs, Yblobs, Bblobs, imgRblobs, imgYblobs, imgBblobs] = getBlobs(cam);
