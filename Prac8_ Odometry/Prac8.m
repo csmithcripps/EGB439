@@ -4,11 +4,11 @@ close all
 addpath('~/Documents/EGB439/Robot_Functions')
 
 % Init Pibot
-pb = PiBot('172.19.232.178');
+pb = PiBot('172.19.232.173');
 
 % Initial values/constants
 q = [0 0 0];
-goal = [1 1];
+goal = [0.5 0.5];
 
 % Setup values
 qList = q;
@@ -26,8 +26,18 @@ while (1)
     dTicks = encoder - prevEncoder;
     prevEncoder = encoder;
     
+    %% Control Robot
+    % Drive toward goal
+    vel = control.driveToPoint(q, goal);
+    pb.setVelocity(vel)
+    
+    % Check if reached goal
+    if abs(sum(vel)) < 10
+        break
+    end
+    
     % Update values
-    dq = estimateEncoder(dTicks, q);
+    dq = encoderToPose(dTicks, q);
     if dq == [0 0 0]
         continue
     end
@@ -42,17 +52,6 @@ while (1)
     end
     axis equal
     drawnow
-    
-    
-    %% Control Robot
-    % Drive toward goal
-    vel = control.driveToPoint(goal, q);
-    pb.setVelocity(vel)
-    
-    % Check if reached goal
-    if abs(sum(vel)) < 10
-        break
-    end
     
     pause(0.1);   
 end
