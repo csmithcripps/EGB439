@@ -1,7 +1,7 @@
 %% Prac 7
 clear variables
 close all
-addpath('~/Documents/EGB439/Robot_Functions')
+addpath('../Robot_Functions')
 
 % Init Pibot
 pb = PiBot('172.19.232.173');
