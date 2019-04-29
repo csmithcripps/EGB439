@@ -4,10 +4,10 @@ function drawFrame(q)
     theta= q(3);
     r = 0.2;
     
-    cx_x = x + r*cosd(theta);
-    cx_y = y + r*sind(theta);
-    cy_x = x + r*cosd(theta+90);
-    cy_y = y + r*sind(theta+90);
+    cx_x = x + r*cos(theta);
+    cx_y = y + r*sin(theta);
+    cy_x = x + r*cos(theta+pi/2);
+    cy_y = y + r*sin(theta+pi/2);
     
     hold on 
     plot(x,y,'r*')
