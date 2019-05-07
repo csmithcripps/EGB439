@@ -2,7 +2,7 @@ function [x,y] = getBeaconPos(height, xPx, pose)
     
         % Constants
         focalLen = 3.04 * 10^-3;  % m
-        beaconHeight = 0.157;   % m
+        beaconHeight = 0.057;   % m
         pixSize = 11.5 * 10^-6; % m
         imWidth = 320;         % px
         xFov = deg2rad(62.2);   % rad

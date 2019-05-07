@@ -52,7 +52,6 @@ function IDList = idBeacon(cam)
             ID = bin2dec(ID);
             width = Rblobs(i).umax - Rblobs(i).umin;
             IDList = [IDList;ID, width, Rblobs(i).uc];
-            IDList
         elseif Bblobs(i).vc > Yblobs(i).vc && Bblobs(i).vc > Rblobs(i).vc && Yblobs(i).vc > Rblobs(i).vc
             ID = '101101';
             ID = bin2dec(ID);  
