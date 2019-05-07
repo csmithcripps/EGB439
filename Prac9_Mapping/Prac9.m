@@ -42,9 +42,10 @@ while (r > 0.2)
     cam = pb.getImage();
     idList = idBeacon(cam);
     for i = 1:size(idList,1)
-        [range, relBearing] = getBeaconPos(idList(i,2),idList(i,3), q);
+        [x,y] = getBeaconPos(idList(i,2),idList(i,3), q);
         hold on
-        plot(idx,idy,'k*')
+        plot(x,y,'k*')
+        drawnow
     end
     %% Plot
     for i = size(qList,1)
