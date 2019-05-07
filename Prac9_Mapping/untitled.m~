@@ -1,0 +1,1 @@
+function [range, bearing] = getRangeBearing(width, x)
