@@ -19,7 +19,8 @@ pb.resetEncoder
 figure
 hold on
 r = sqrt(0.5^2 + 0.5^2);
-while (r > 0.2)    
+t = 0;
+while (t < 20)    
     %% Estimate Position   
     % Update Encoder
     encoder = pb.getEncoder;
@@ -33,7 +34,7 @@ while (r > 0.2)
     %% Control Robot
     % Drive toward goal
 %     vel = control.driveToPoint(q,goal,0.3,0.10);  % compute the wheel speeds given the current configuration
-    vel = [0,0];
+    vel = [15,20];
     pb.setVelocity(vel)    
     
     
@@ -58,7 +59,8 @@ while (r > 0.2)
     
     
     r = sqrt((goal(1) - q(1))^2 + (goal(2) - q(2))^2);
-    pause(0.1);   
+    pause(0.1); 
+    t = t + 0.1;
 end
 pb.stop
 

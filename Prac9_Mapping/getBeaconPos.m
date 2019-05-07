@@ -11,7 +11,7 @@ function [x,y] = getBeaconPos(height, xPx, pose)
         distance = beaconHeight / (height * pixSize) * focalLen;
 
         % Find Bearing
-        angle = -(xFov/2) * (xPx - (imWidth/2)) / (imgWidth/2);
+        angle = -(xFov/2) * (xPx - (imWidth/2)) / (imWidth/2);
         
         x = pose(1) + distance * cos(pose(3) + angle);
         y = pose(2) + distance * sin(pose(3) + angle);
