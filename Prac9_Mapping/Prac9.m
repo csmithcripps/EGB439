@@ -2,7 +2,7 @@
 clear variables
 close all
 addpath('../Robot_Functions')
-
+disp('REEEEEEE')
 % Init Pibot
 pb = PiBot('172.19.232.173');
 
@@ -21,7 +21,7 @@ hold on
 r = sqrt(0.5^2 + 0.5^2);
 t = 0;
 tic
-while (t < 20)    
+while (t < 25)    
     %% Estimate Position   
     % Update Encoder
     encoder = pb.getEncoder;
