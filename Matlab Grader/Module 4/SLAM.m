@@ -65,7 +65,7 @@ function [output] = SLAM(mode)
                     grid on; axis equal;
                     axis([-2 5 -2 5]);
                     hold on
-                    drawFrame(mu, 1)
+                    %drawFrame(mu, 1)
                     plot_cov(mu,Sigma,3,'b')
                     for i=1:length(z)
                         lidx = 3+2*i;

@@ -2,7 +2,7 @@ function drawFrame(q)
     x = q(1);
     y = q(2);
     theta= q(3);
-    r = 0.01;
+    r = 0.1;
     
     cx_x = x + r*cos(theta);
     cx_y = y + r*sin(theta);

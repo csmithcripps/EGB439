@@ -10,6 +10,6 @@ function dq = encoderToPose(dTicks, q)
     dy = dc * sin(q(3));
     dtheta = (d(2) - d(1)) / 0.16;
     
-    dq = [dx dy dtheta];
+    dq = [dx; dy; dtheta];
 
 end

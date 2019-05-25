@@ -4,7 +4,7 @@ function IDList = idBeacon(cam)
     width = 0.0;
     char ID;
     IDList = [];
-    [Rblobs, Yblobs, Bblobs, imgRblobs, imgYblobs, imgBblobs] = getBlobs(cam);
+    [Rblobs, Yblobs, Bblobs] = getBlobs(cam);
 
     %Sorts the blobs into uc values
     for i = 1:length(Rblobs)
