@@ -1,27 +1,19 @@
-function plotSLAM(mu,S)
-    q = mu(1:3);
-    Sr = S (1:3,1:3);
-    mu = mu(4:end);
-    S = S(:,4:end);
-    
-    X = mu(1:2:end);
-    Y = mu(2:2:end);
-    
-    
-    %% Plot
-%   clf
+function plotSLAM(mu,S,idMap)
+    clf
+    grid on; axis equal;
+    axis([-2 3 -2 3]);
     hold on
-    plot_cov(q',Sr,3)
+    drawFrame(mu(1:3))
     hold on
-    drawFrame(q)
-    for i = 1:length(X)
-        Sl = S(2*(i-1) +1: 2*(i-1) +2,2*(i-1) +1: 2*(i-1) +2);
+    plot_cov(mu,S,3,'b')
+    for i=1:length(idMap)
+        lidx   = 3 + i*2 -1;
+        lSigma = S(lidx:lidx+1,lidx:lidx+1);
         hold on
-        plot(X(i),Y(i))
-        plot_cov([X(i);Y(i)],Sl,3)
-        drawnow
+        plot_cov(mu(lidx:lidx+1),lSigma,3,'g');   
+        hold on
+        scatter(mu(lidx),mu(lidx+1),50,'b+');   
     end
-    axis equal
     drawnow
 end
 

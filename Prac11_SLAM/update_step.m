@@ -33,7 +33,7 @@ function [mu, Sigma] = update_step(i,zi,mu,Sigma,Q)
     G(:,  2*(i-1) +1 +3  :  2*(i-1) +2 +3) = -G__;
     K = Sigma*G' * (G*Sigma*G' + Q)^-1;
 
-    b = (zi' - h);
+    b = (zi - h);
     b(2) = wrapToPi(b(2));
 
     %Propogate Updates

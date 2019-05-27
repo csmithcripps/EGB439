@@ -24,10 +24,17 @@ idList = [];
 %% Identify first beacon
 
 while (isempty(idList))
+    
     vel = [10,-10];
-    pb.setVelocity(vel);    
+    pb.setVelocity(vel);   
+    pause(0.2)
+    pb.stop()
+    pause(0.05)
+    
     cam = pb.getImage();
-    idList = idBeacon(cam);    
+    idList = idBeacon(cam);  
+     
+    
 end
 
 pb.stop();
@@ -38,18 +45,25 @@ mu = [0;0;0];
 %find first goal location
 [r,beta] = getBeaconRangeBearing(idList(1,2),idList(1,3));
 
-posR = r-0.1;
+posR = r-0.2;
 posX = posR*sin(beta);
 posY = posR*cos(beta);
 
 %% SLAM to Point 1
-SLAM2Point(mu,S,idMap,[posX,posY],pb,R,Q)
+[mu,S,idMap] = SLAM2Point(mu,S,idMap,[posX,posY],pb,R,Q);
 
 %% Search the map
 i = 2;
 while (length(idMap)<5)
-    [posX,posY] = curiousBot(2,mu,idMap,pb);
+    disp("Finding Beacon ")
+    disp(i)
+    [posX,posY] = curiousBot(2,mu,idMap,pb,S,R,Q);
+    
+    disp("Going to point")
+    disp(i)
     [mu,S,idMap] = SLAM2Point(mu,S,idMap,[posX,posY],pb,R,Q);
+    
+    i=i+1;
 end
 
 %% Calculate the centroid
