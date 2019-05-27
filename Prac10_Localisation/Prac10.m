@@ -71,7 +71,34 @@ facing = false;
         clf
         axis([0,2,0,2])
         hold on
-        plot_cov(q,S,3)
+        plot_cov(q,S,3)%% Read Inputs
+        encoder = pb.getEncoder;
+        cam = pb.getImage();
+        cam(1:50,:,:) = 0;
+        %% Predict  
+        % Update Encoder    
+        dTicks = encoder - prevEncoder;
+        prevEncoder = encoder;
+        dq = encoderToPose(dTicks, q);
+        [q,S] = predict_step(q,S,dq,R);
+
+        %% Update
+        idList = idBeacon(cam);
+        for j = 1:size(idList,1)
+            disp('Beacons:')
+            disp(idList)
+            [r,b] = getBeaconRangeBearing(idList(j,2),idList(j,3));
+            [q,S] = update_step(idList(j,1),[r;b],q,S,Q);    
+            if idList(j,1) == 39
+                facing = true;
+            end
+        end
+
+        %% Control Robot
+        % Drive toward goal
+%         vel = control.driveToPoint(q,goal(1:2),0.1,0.08);  % compute the wheel speeds given the current configuration
+        vel = [-10,10];
+        pb.setVelocity(vel)   
         hold on
         drawFrame(q)
         for i = 1:size(map,1)

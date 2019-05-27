@@ -1,7 +1,7 @@
 function IDList = idBeacon(cam)
 
     %Initial Varaibla values
-    width = 0.0;
+    height = 0.0;
     char ID;
     IDList = [];
     [Rblobs, Yblobs, Bblobs] = getBlobs(cam);
@@ -45,33 +45,33 @@ function IDList = idBeacon(cam)
         if Rblobs(i).vc > Yblobs(i).vc && Rblobs(i).vc > Bblobs(i).vc && Yblobs(i).vc > Bblobs(i).vc
             ID = '011110';
             ID = bin2dec(ID);
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         elseif Rblobs(i).vc > Yblobs(i).vc && Rblobs(i).vc > Bblobs(i).vc && Bblobs(i).vc > Yblobs(i).vc
             ID = '011011';
             ID = bin2dec(ID);
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         elseif Bblobs(i).vc > Yblobs(i).vc && Bblobs(i).vc > Rblobs(i).vc && Yblobs(i).vc > Rblobs(i).vc
             ID = '101101';
             ID = bin2dec(ID);  
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         elseif Bblobs(i).vc > Yblobs(i).vc && Bblobs(i).vc > Rblobs(i).vc && Rblobs(i).vc > Yblobs(i).vc
             ID = '100111';
             ID = bin2dec(ID);
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         elseif Yblobs(i).vc > Bblobs(i).vc && Yblobs(i).vc > Rblobs(i).vc && Bblobs(i).vc > Rblobs(i).vc
             ID = '111001';
             ID = bin2dec(ID);
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         elseif Yblobs(i).vc > Bblobs(i).vc && Yblobs(i).vc > Rblobs(i).vc && Rblobs(i).vc > Bblobs(i).vc
             ID = '110110';
             ID = bin2dec(ID);
-            width = Rblobs(i).umax - Rblobs(i).umin;
-            IDList = [IDList;ID, width, Rblobs(i).uc];
+            height = Rblobs(i).vmax - Rblobs(i).vmin;
+            IDList = [IDList;ID, height, Rblobs(i).uc];
         end
     end
 end

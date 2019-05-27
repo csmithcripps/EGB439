@@ -1,4 +1,4 @@
-function [mu,Sigma] =predict_step(mu,Sigma,d,dth,R)
+function [mu,Sigma] =predict_step(mu,Sigma,dq,R)
     %@param:
     %       mu      : The Average State Vector for the Landmarks
     %       Sigma   : The Covariance matrix of all landmarks
@@ -10,11 +10,10 @@ function [mu,Sigma] =predict_step(mu,Sigma,d,dth,R)
     %       Sigma   : The Covariance matrix of all landmarks
 
     twoN = length(mu) - 3;
+    d = dq(1) / cos(mu(3));
     %Calculate Predicted Pose
     xt = mu(1:3);
-    xt = xt + [d*cos(xt(3));
-                    d*sin(xt(3));
-                    dth];
+    xt = xt + dq;
     xt(3) = wrapToPi(xt(3));
 
     %Calculate Jacobians
@@ -32,6 +31,7 @@ function [mu,Sigma] =predict_step(mu,Sigma,d,dth,R)
 
     %Propogate Changes
     mu(1:3) = xt;
-    Sigma = Jx * Sigma * Jx' + Ju * R * Ju';
+    Sigma = Jx * Sigma * Jx' 
+%     + Ju * R * Ju';
     
 end
