@@ -3,7 +3,7 @@ function plotSLAM(mu,S,idMap)
     grid on; axis equal;
     axis([-2 3 -2 3]);
     hold on
-    drawFrame(mu(1:3))
+    drawFrame(mu(1:3))  
     hold on
     plot_cov(mu,S,3,'b')
     for i=1:length(idMap)

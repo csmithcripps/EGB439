@@ -16,7 +16,6 @@ try
     Bblobs = iblobs(bBin, 'area', [60 10000], 'boundary', 'touch', 0);
     Yblobs = iblobs(yBin, 'area', [60 10000], 'boundary', 'touch', 0);
 catch ME
-    disp(".")
     Rblobs = [];
     Bblobs = [];
     Yblobs = [];

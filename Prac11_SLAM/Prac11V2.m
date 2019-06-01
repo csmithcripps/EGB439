@@ -47,7 +47,7 @@ disp("Going To Center")
 [Centroidx,Centroidy] = findCentroid(mu,S);
 
 [mu,S,idMap] = SLAM2Point(mu,S,idMap,[Centroidx,Centroidy],pb,R,Q);
-
+pb.setLEDArray(65535);
 
 
 

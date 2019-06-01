@@ -32,7 +32,6 @@ function [mu,Sigma] =predict_step(mu,Sigma,d,dth,R)
 
     %Propogate Changes
     mu(1:3,1) = xt;
-    Sigma = Jx * Sigma * Jx'; 
-%     + Ju * R * Ju';
+    Sigma = Jx * Sigma * Jx' + Ju * R * Ju';
     
 end

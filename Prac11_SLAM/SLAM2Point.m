@@ -26,13 +26,14 @@ function [mu, S, idMap] = SLAM2Point(mu,S,idMap,goal,pb,R,Q)
                 disp(idList(j,1))
                 [r,b] = getBeaconRangeBearing(idList(j,2),idList(j,3));
                 [mu,S] = initLandmarks([r;b],Q,mu,S);
-                idMap = [idMap; idList(j,1)];
+                idMap = [idMap; idList(j,1)]
+%                 pb.setLEDArray(
             end
         end
 
         %% Control Robot
         % Drive toward goal
-        vel = control.driveToPoint(mu(1:3),goal(1:2),0.09,0.045);  % compute the wheel speeds given the current configuration
+        vel = control.driveToPoint(mu(1:3),goal(1:2),0.095,0.05);  % compute the wheel speeds given the current configuration
         pb.setVelocity(vel)   
 
         plotSLAM(mu,S,idMap)
@@ -41,8 +42,7 @@ function [mu, S, idMap] = SLAM2Point(mu,S,idMap,goal,pb,R,Q)
         drawnow
         
         r = sqrt((goal(1) - mu(1))^2 + (goal(2) - mu(2))^2);
-        disp(idMap)
     end
     pb.stop()
-    disp("SLAMMMEEDD")
+    disp("SLAMMMED")
 end
