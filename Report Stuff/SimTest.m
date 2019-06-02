@@ -1,8 +1,10 @@
-function [sumError] = SimTest(R,Q, nsteps)    
+function [error] = SimTest(R,Q, nsteps,plotOut)    
 % this simulator runs for 100 steps
     load('reportData.mat')
     
-    
+    if nargin < 4
+        plotOut = 1;
+    end
     startStep = 4;
     idMap = [];
     qSlam = [];
@@ -10,6 +12,7 @@ function [sumError] = SimTest(R,Q, nsteps)
     mu =   [q(startStep,1);q(startStep,2);q(startStep,3)];
     S =diag([0.1 0.1 0.1*pi/180]).^2;
     % main loop
+    error = 0;
     for k = startStep:nsteps + startStep
        qSlam = [qSlam;mu(1:3)'];
        
@@ -44,20 +47,21 @@ function [sumError] = SimTest(R,Q, nsteps)
     %     scatter(RealBeaconPos(:,1),RealBeaconPos(:,2),'r+')
     %     hold on
     %     plot(q(k,1),q(k,2),'g*')
+    
+        error = error + sqrt((q(startStep +length(qSlam),1) - qSlam(end,1))^2 +...
+                             (q(startStep +length(qSlam),2) - qSlam(end,2))^2);
     end
-
-    hold on
-    plotSLAM(mu,S);
-    hold on
-    GTruth = plot(q(startStep:nsteps+startStep,1),q(startStep:nsteps+startStep,2),'r--');
-    hold on
-    SLAMOut = plot(qSlam(:,1),qSlam(:,2),'m--');
-    legend([GTruth,SLAMOut],'Ground Truth', 'SLAM');
-
-    sumError = [0 0];
-    for i = 2:length(qSlam)
-        sumError(1) = sumError(1) + abs(q(i,1) - qSlam(i,1)/q(i,1));
-        sumError(2) = sumError(2) + abs(q(i,2) - qSlam(i,1)/q(i,2));
+    
+    
+    qSlam = [qSlam;mu(1:3)'];
+    
+    if plotOut
+        hold on
+        plotSLAM(mu,S);
+        hold on
+        GTruth = plot(q(startStep:startStep+length(qSlam),1),q(startStep:startStep+length(qSlam),2),'r--');
+        hold on
+        SLAMOut = plot(qSlam(:,1),qSlam(:,2),'m--');
+%         legend([GTruth,SLAMOut],'Ground Truth', 'SLAM');
     end
-    error = (100/length(q)) * sumError;
 end

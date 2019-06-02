@@ -46,7 +46,7 @@ figure
 for i =1:4
     subplot(2,2,i)
     title(["Q dN=" + string(dN(i))])
-    R1 = diag([0.01 1*pi/180]).^2;
+    R1 = diag([0.02 1*pi/180]).^2;
 
     Q1 = diag([dN(i) 15*pi/180]).^2;
     hold on
@@ -70,8 +70,6 @@ for i =1:4
     SimTest(R1,Q1,30);
     hold off
 end
-
-
 
 
 
