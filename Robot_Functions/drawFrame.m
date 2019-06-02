@@ -15,7 +15,5 @@ function drawFrame(q)
     plot([x cx_x], [y cx_y],'r-')
     hold on
     plot([x cy_x], [y cy_y],'b-')
-    
-    drawnow
 end
     
