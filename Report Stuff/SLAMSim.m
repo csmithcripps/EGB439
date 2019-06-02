@@ -1,6 +1,7 @@
 % this simulator runs for 100 steps
 clear variables
 load('reportData.mat')
+addpath('../Robot_Functions')
 
 
 nsteps = k-1;
@@ -12,7 +13,7 @@ RealBeaconPos = [0.15,0.15;
                  0.40,1.75;
                  1.60,1.75];
      
-R = diag([0.1 10*pi/180]).^2;
+R = diag([0.5 10*pi/180]).^2;
 
 Q = diag([0.15 4*pi/180]).^2;
 
@@ -58,8 +59,13 @@ plotSLAM(mu,S);
 hold on
 % scatter(RealBeaconPos(:,1),RealBeaconPos(:,2),'r+')
 hold on
-plot(q(:,1),q(:,2),'r')
+GTruth = plot(q(:,1),q(:,2),'r--');
 hold on
-plot(qSlam(:,1),qSlam(:,2),'b')
+SLAMOut = plot(qSlam(:,1),qSlam(:,2),'m');
+legend([GTruth,SLAMOut],'Ground Truth', 'SLAM');
+
+
+
+
 
 
