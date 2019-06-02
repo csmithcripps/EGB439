@@ -1,7 +1,7 @@
 function plotSLAM(mu,S)
     nBeacons = (length(mu)-3)/2;
     grid on; axis equal;
-    axis([0 3 -0.5 2.5]);
+%     axis([0 3 -0.5 2.5]);
     hold on
     drawFrame(mu(1:3))  
     hold on

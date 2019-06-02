@@ -1,10 +1,11 @@
 % this simulator runs for 100 steps
 clear variables
+clf
 load('reportData.mat')
 addpath('../Robot_Functions')
 
 
-nsteps = k-1;
+nsteps = k/2;
 idMap = [];
 qSlam = [];
 RealBeaconPos = [0.15,0.15;
@@ -13,18 +14,18 @@ RealBeaconPos = [0.15,0.15;
                  0.40,1.75;
                  1.60,1.75];
      
-R = diag([0.5 10*pi/180]).^2;
+R = diag([0.01 0.01*pi/180]).^2;
 
-Q = diag([0.15 4*pi/180]).^2;
+Q = diag([0.5 30*pi/180]).^2;
 
-mu =   [q(1,1);q(1,2);q(1,3)];
-S =diag([0.1 0.1 0.1*pi/180]).^2;
+mu =    [q(1,1);q(1,2);q(1,3)]
+S  =    diag([0.1 0.1 0.1*pi/180]).^2
 % main loop
 for k = 1:nsteps
    dTicks = o(k,:);
    [d,dth]  = encoderToPose(dTicks,mu(1:3));    
    % complete the prediction step in the body of the function below
-   [mu,Sigma] = predict_step(mu,S,d,dth,R);
+   [mu,S] = predict_step(mu,S,d,dth,R);
    
     zStep = z(:,:,k);    
     for j = 1:5
